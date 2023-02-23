@@ -9,62 +9,33 @@ namespace LinqProblems
 {
     public class ProductReviewManagement
     {
-        public readonly DataTable dataTable = new DataTable();
-        
-        // Top records
-        
-        //public void TopRecords(List<ProductReview> review)
-        //{
-        //    var recordData = (from productReviews in review orderby productReviews.Rating descending select productReviews).Take(3);
-        //    Console.WriteLine("Top Records ");
-        //    foreach (ProductReview product in recordData)
-        //    {
-        //        Console.WriteLine("ProductID : " + product.ProductID + " UserID : " + product.UserID + " Rating : " + product.Rating + " Review : " + product.Review + " IsLike : " + product.IsLike);
-        //    }
-        //}
-
-        //public void SelectedRecords(List<ProductReview> review)
-        //{
-        //    var recordData = (from productReviews in review where productReviews.Rating > 3 && (productReviews.ProductID == 1 || productReviews.ProductID == 4 || productReviews.ProductID == 9) select productReviews);
-        //    Console.WriteLine("Selected Records ");
-        //    foreach (ProductReview product in recordData)
-        //    {
-        //        Console.WriteLine("ProductID : " + product.ProductID + " UserID : " + product.UserID + " Rating : " + product.Rating + " Review : " + product.Review + " IsLike : " + product.IsLike);
-        //    }
-        //}
-
-        //public void CountOfReviewPresenForEachProductID(List<ProductReview> review)
-        //{
-        //    var recordData = (from productReviews in review group productReviews by productReviews.ProductID into product select new { ProductID = product.Key, Count = product.Count() });
-
-        //    Console.WriteLine("Count Of Review Present For Each ProductID ");
-        //    foreach (var product in recordData)
-        //    {
-        //        Console.WriteLine("Product Id : " + product.ProductID + "\tCount is : " + product.Count);
-        //    }
-        //    Console.WriteLine();
-        //}
-
-        //public void RetriveOnlyProductIdAndReviewFromAllRecords(List<ProductReview> review)
-        //{
-        //    var recordData = (from productReviews in review select (productReviews.ProductID, productReviews.Review));
-        //    Console.WriteLine("ProductId And Review From All Records ");
-        //    foreach (var product in recordData)
-        //    {
-        //        Console.WriteLine("ProductID : " + product.ProductID + " \tReview : " + product.Review);
-        //    }
-        //    Console.WriteLine();
-        //}
-
-        public void SkipTopFiveRecords(List<ProductReview> review)
+        public static List<ProductReview> AddProductsReview()
         {
-            var recordData = (from productReviews in review orderby productReviews.Rating descending select productReviews).Skip(5);
-            Console.WriteLine("Top Records Skip (5) ");
-            foreach (ProductReview product in recordData)
+            List<ProductReview> list = new List<ProductReview>()
             {
-                Console.WriteLine("ProductID : " + product.ProductID + " UserID : " + product.UserID + " Rating : " + product.Rating + " Review : " + product.Review + " IsLike : " + product.IsLike);
+                new ProductReview(){ ProductID=1,UserID=34,Review="Good",IsLike=true,Rating=4.5 },
+                new ProductReview(){ ProductID=4,UserID=23,Review="Bad",IsLike=false,Rating=1.5 },
+                new ProductReview(){ ProductID=5,UserID=39,Review="Good",IsLike=true,Rating=3.5 },
+                new ProductReview(){ ProductID=8,UserID=57,Review="Average",IsLike=true,Rating=3.5 },
+                new ProductReview(){ ProductID=1,UserID=78,Review="Good",IsLike=true,Rating=3.5 },
+                new ProductReview(){ ProductID=7,UserID=22,Review="Average",IsLike=true,Rating=3.0 },
+                new ProductReview(){ ProductID=9,UserID=11,Review="Good",IsLike=true,Rating=3.9 },
+                new ProductReview(){ ProductID=3,UserID=45,Review="Bad",IsLike=false,Rating=2.5 },
+                new ProductReview(){ ProductID=6,UserID=89,Review="Good",IsLike=true,Rating=3.5 },
+                new ProductReview(){ ProductID=2,UserID=24,Review="Good",IsLike=true,Rating=4.8 },
+                new ProductReview(){ ProductID=7,UserID=10,Review="Bad",IsLike=false,Rating=2.0 }
+            };
+
+            return list;
+        }
+        public static void RetrieveProductIDWithRating(List<ProductReview> list)
+        {
+            Console.WriteLine("Only Retrieving ProductID with Rating");
+            var result = list.Select(product => new { ProductID = product.ProductID, Rating = product.Rating }).ToList();
+            foreach (var item in result)
+            {
+                Console.WriteLine("ProductID: " + item.ProductID + " Rating: " + item.Rating);
             }
-            Console.WriteLine();
         }
     }
 }
