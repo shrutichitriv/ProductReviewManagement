@@ -23,14 +23,27 @@ namespace LinqProblems
         //    }
         //}
 
-        public void SelectedRecords(List<ProductReview> review)
+        //public void SelectedRecords(List<ProductReview> review)
+        //{
+        //    var recordData = (from productReviews in review where productReviews.Rating > 3 && (productReviews.ProductID == 1 || productReviews.ProductID == 4 || productReviews.ProductID == 9) select productReviews);
+        //    Console.WriteLine("Selected Records ");
+        //    foreach (ProductReview product in recordData)
+        //    {
+        //        Console.WriteLine("ProductID : " + product.ProductID + " UserID : " + product.UserID + " Rating : " + product.Rating + " Review : " + product.Review + " IsLike : " + product.IsLike);
+        //    }
+        //}
+
+        public void CountOfReviewPresenForEachProductID(List<ProductReview> review)
         {
-            var recordData = (from productReviews in review where productReviews.Rating > 3 && (productReviews.ProductID == 1 || productReviews.ProductID == 4 || productReviews.ProductID == 9) select productReviews);
-            Console.WriteLine("Selected Records ");
-            foreach (ProductReview product in recordData)
+            var recordData = (from productReviews in review group productReviews by productReviews.ProductID into product select new { ProductID = product.Key, Count = product.Count() });
+
+            Console.WriteLine("Count Of Review Present For Each ProductID ");
+            foreach (var product in recordData)
             {
-                Console.WriteLine("ProductID : " + product.ProductID + " UserID : " + product.UserID + " Rating : " + product.Rating + " Review : " + product.Review + " IsLike : " + product.IsLike);
+                Console.WriteLine("Product Id : " + product.ProductID + "\tCount is : " + product.Count);
             }
+            Console.WriteLine();
+
         }
     }
 }
