@@ -32,7 +32,8 @@ namespace LinqProblems
             ProductReviewManagement management = new ProductReviewManagement();
             //management.TopRecords(productReviewList);
             //management.SelectedRecords(productReviewList);
-            management.CountOfReviewPresenForEachProductID(productReviewList);
+            //management.CountOfReviewPresenForEachProductID(productReviewList);
+            management.RetriveOnlyProductIdAndReviewFromAllRecords(productReviewList);
         }
     }
 }

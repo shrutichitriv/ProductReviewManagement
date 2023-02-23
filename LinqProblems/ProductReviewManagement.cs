@@ -33,17 +33,27 @@ namespace LinqProblems
         //    }
         //}
 
-        public void CountOfReviewPresenForEachProductID(List<ProductReview> review)
-        {
-            var recordData = (from productReviews in review group productReviews by productReviews.ProductID into product select new { ProductID = product.Key, Count = product.Count() });
+        //public void CountOfReviewPresenForEachProductID(List<ProductReview> review)
+        //{
+        //    var recordData = (from productReviews in review group productReviews by productReviews.ProductID into product select new { ProductID = product.Key, Count = product.Count() });
 
-            Console.WriteLine("Count Of Review Present For Each ProductID ");
+        //    Console.WriteLine("Count Of Review Present For Each ProductID ");
+        //    foreach (var product in recordData)
+        //    {
+        //        Console.WriteLine("Product Id : " + product.ProductID + "\tCount is : " + product.Count);
+        //    }
+        //    Console.WriteLine();
+        //}
+
+        public void RetriveOnlyProductIdAndReviewFromAllRecords(List<ProductReview> review)
+        {
+            var recordData = (from productReviews in review select (productReviews.ProductID, productReviews.Review));
+            Console.WriteLine("ProductId And Review From All Records ");
             foreach (var product in recordData)
             {
-                Console.WriteLine("Product Id : " + product.ProductID + "\tCount is : " + product.Count);
+                Console.WriteLine("ProductID : " + product.ProductID + " \tReview : " + product.Review);
             }
             Console.WriteLine();
-
         }
     }
 }
