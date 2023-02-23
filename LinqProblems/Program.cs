@@ -30,7 +30,8 @@ namespace LinqProblems
             Console.WriteLine();
 
             ProductReviewManagement management = new ProductReviewManagement();
-            management.TopRecords(productReviewList);
+            //management.TopRecords(productReviewList);
+            management.SelectedRecords(productReviewList);
         }
     }
 }
