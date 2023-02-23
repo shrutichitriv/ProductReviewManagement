@@ -45,13 +45,24 @@ namespace LinqProblems
         //    Console.WriteLine();
         //}
 
-        public void RetriveOnlyProductIdAndReviewFromAllRecords(List<ProductReview> review)
+        //public void RetriveOnlyProductIdAndReviewFromAllRecords(List<ProductReview> review)
+        //{
+        //    var recordData = (from productReviews in review select (productReviews.ProductID, productReviews.Review));
+        //    Console.WriteLine("ProductId And Review From All Records ");
+        //    foreach (var product in recordData)
+        //    {
+        //        Console.WriteLine("ProductID : " + product.ProductID + " \tReview : " + product.Review);
+        //    }
+        //    Console.WriteLine();
+        //}
+
+        public void SkipTopFiveRecords(List<ProductReview> review)
         {
-            var recordData = (from productReviews in review select (productReviews.ProductID, productReviews.Review));
-            Console.WriteLine("ProductId And Review From All Records ");
-            foreach (var product in recordData)
+            var recordData = (from productReviews in review orderby productReviews.Rating descending select productReviews).Skip(5);
+            Console.WriteLine("Top Records Skip (5) ");
+            foreach (ProductReview product in recordData)
             {
-                Console.WriteLine("ProductID : " + product.ProductID + " \tReview : " + product.Review);
+                Console.WriteLine("ProductID : " + product.ProductID + " UserID : " + product.UserID + " Rating : " + product.Rating + " Review : " + product.Review + " IsLike : " + product.IsLike);
             }
             Console.WriteLine();
         }
