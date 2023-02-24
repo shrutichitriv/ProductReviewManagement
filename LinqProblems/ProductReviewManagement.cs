@@ -142,5 +142,15 @@ namespace LinqProblems
                 Console.WriteLine("Product Id: {0} \tAverage Ratings: {1}", row.productid, row.average);
             }
         }
+
+        public static void RecordsWithNiceReview(DataTable dataTable)
+        {
+            var niceReview = from product in dataTable.AsEnumerable() where product.Field<string>("Review").Contains("Nice") || product.Field<string>("Review").Contains("Good") select product;
+            Console.WriteLine($"ProductId, UserId, Review, IsLike, Rating");
+            foreach (var row in niceReview)
+            {
+                Console.WriteLine($"{row["ProductId"]},  {row["UserId"]},  {row["Review"]},  {row["IsLike"]},  {row["Rating"]}");
+            }
+        }
     }
 }
