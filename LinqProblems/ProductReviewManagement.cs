@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace LinqProblems
 {
-    public class ProductReviewManagement
+    class ProductReviewManagement
     {
         public static List<ProductReview> AddProductsReview()
         {
@@ -28,6 +28,55 @@ namespace LinqProblems
 
             return list;
         }
+        public static void DisplayeProductsReview(List<ProductReview> list)
+        {
+            foreach (var item in list)
+            {
+                Console.WriteLine(item);
+            }
+        }
+        public static void Top3HighRatedProduct(List<ProductReview> list)
+        {
+            Console.WriteLine("Retrieving Top 3 products based on rating");
+            //Query Syntax
+            var sortedProduct = from product in list orderby product.Rating descending select product;
+            var top3 = sortedProduct.Take(3).ToList();
+            DisplayeProductsReview(top3);
+        }
+        public static void ProductsRatingGreaterThan3(List<ProductReview> list)
+        {
+            //Query Syntax
+            Console.WriteLine("Retrieving products based on rating greater than 3 and having ProductID as 1/4/9");
+            var res = list.Where(p => p.Rating > 3 && (p.ProductID == 1 || p.ProductID == 4 || p.ProductID == 9)).ToList();
+            DisplayeProductsReview(res);
+
+
+        }
+        public static void CountofReviewForEachProductID(List<ProductReview> list)
+        {
+            Console.WriteLine("Count of products for each ProductID");
+            //2 lamda Expressions
+            var result = list.GroupBy(p => p.ProductID).Select(product => new { Id = product.Key, Count = product.Count() }).ToList();
+            foreach (var item in result)
+            {
+                Console.WriteLine("ProductID: " + item.Id + " Count: " + item.Count);
+            }
+        }
+        public static void RetrieveProductIDWithReview(List<ProductReview> list)
+        {
+            Console.WriteLine("Only Retrieving ProductID with Review");
+            var result = list.Select(product => new { ProductID = product.ProductID, Review = product.Review }).ToList();
+            foreach (var item in result)
+            {
+                Console.WriteLine("ProductID: " + item.ProductID + " Review: " + item.Review);
+            }
+        }
+        public static void SkipTop5Records(List<ProductReview> list)
+        {
+            Console.WriteLine("Skipping top 5 records and displaying remaining records");
+            var result = list.Skip(5).ToList();
+            DisplayeProductsReview(result);
+        }
         public static void RetrieveProductIDWithRating(List<ProductReview> list)
         {
             Console.WriteLine("Only Retrieving ProductID with Rating");
@@ -35,6 +84,38 @@ namespace LinqProblems
             foreach (var item in result)
             {
                 Console.WriteLine("ProductID: " + item.ProductID + " Rating: " + item.Rating);
+            }
+        }
+        public static DataTable CreatingDataTable()
+        {
+            DataTable dataTable = new DataTable();
+            dataTable.Columns.Add("ProductID", typeof(int));
+            dataTable.Columns.Add("UserID", typeof(int));
+            dataTable.Columns.Add("Review", typeof(string));
+            dataTable.Columns.Add("IsLike", typeof(bool));
+            dataTable.Columns.Add("Rating", typeof(double));
+
+            dataTable.Rows.Add(1, 34, "Good", true, 4.5);
+            dataTable.Rows.Add(3, 57, "Good", true, 3.9);
+            dataTable.Rows.Add(4, 56, "Average", true, 3.0);
+            dataTable.Rows.Add(7, 22, "Bad", false, 2.0);
+            dataTable.Rows.Add(8, 21, "Good", true, 4.7);
+            dataTable.Rows.Add(3, 67, "Good", true, 4.3);
+            dataTable.Rows.Add(2, 69, "Good", true, 4.4);
+            dataTable.Rows.Add(9, 13, "Bad", false, 1.5);
+            dataTable.Rows.Add(6, 81, "Average", true, 3.5);
+            dataTable.Rows.Add(5, 29, "Good", true, 4.9);
+            dataTable.Rows.Add(2, 30, "Bad", false, 2.0);
+            return dataTable;
+        }
+        public static void DisplayDataTable(DataTable dataTable)
+        {
+            dataTable = CreatingDataTable();
+            var resRows = from table in dataTable.AsEnumerable() select table;
+            Console.WriteLine($"ProductId,  UserId,  Rating,  Review,  IsLike");
+            foreach (var row in resRows)
+            {
+                Console.WriteLine($"{row["ProductId"]},  {row["UserId"]}, {row["Review"]},  {row["IsLike"]}, {row["Rating"]}");
             }
         }
     }
